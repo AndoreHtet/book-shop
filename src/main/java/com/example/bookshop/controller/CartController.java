@@ -1,5 +1,6 @@
 package com.example.bookshop.controller;
 
+import com.example.bookshop.dto.CartItem;
 import com.example.bookshop.entity.Book;
 import com.example.bookshop.entity.BookId;
 import com.example.bookshop.service.BookService;
@@ -8,8 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,11 +23,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CartController {
     private final CartService cartService;
     private final BookService bookService;
+    @GetMapping("/clear-cart")
+    public String clearCart(){
+        cartService.clearCart();
+        return "redirect:/cart/view-cart";
+    }
     @GetMapping("/view-cart")
     public String viewCart(Model model){
-        model.addAttribute("cartItens",cartService.getCartItems());
+        model.addAttribute("cartItems",cartService.getCartItems());
+        model.addAttribute("quantityList",new CartItem());
         return "viewCart";
     }
+    @PostMapping("/checkout")
+    public String checkout(CartItem cartItem){
+//
+
+        int i=0;
+        for (CartItem item:cartService.getCartItems()){
+            if (cartItem.getCartItemQuantity().get(i) == null){
+                item.setQuantity(1);
+            }
+            else {
+                item.setQuantity(cartItem.getCartItemQuantity().get(i));
+            }
+            i++;
+        }
+        cartService.getCartItems().forEach(System.out::println);
+        return "redirect:/cart/view-cart";
+    }
+
     @GetMapping("/delete")
     public String deleteCartItem(@RequestParam("id")int id,
                                  @RequestParam("isbn")String isbn){
