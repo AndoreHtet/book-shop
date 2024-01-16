@@ -7,9 +7,9 @@
        <div class="container mt-4">
            <div class="row">
                <div class="col">
-                   <form th:object="${quantityList}" th:action="@{/cart/checkout}" method="post">
+                   <form th:object="${cartItem}" th:action="@{/cart/checkout}" method="post">
                    <div class="card shadow p-5 my-4">
-                       <table class="table table-striped my-4 p-5" th:if="${!cartItems.isEmpty()}">
+                       <table class="table table-striped" th:if="${!cartItems.isEmpty()}">
                            <thead>
                            <tr>
                                <th>Id</th>
@@ -31,7 +31,7 @@
                            </tr>
                            </tbody>
                        </table>
-                       <div th:if="${cartItems.isEmpty()}">
+                       <div th:if="${cartItems.isEmpty()}" class="p-4 my-5">
                            <h4 class="text-center text-muted">No Content</h4>
                        </div>
                        <div class="my-3">

@@ -12,7 +12,7 @@
                             <h4>Register Page</h4>
                         </div>
                         <div class="card-body">
-                            <form th:action="@{/auth/save-customer}" th:object="${customer}"
+                            <form th:action="@{/save-customer}" th:object="${customer}"
                             method="post">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -60,7 +60,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">PaymentMethod</label>
                                     <select class="form-select" name="payment">
-                                        <option th:each=" s : ${T(com.example.bookshop.entity.PaymentMethod).values()}" value="${s}"
+                                        <option th:each=" s : ${T(com.example.bookshop.entity.PaymentMethod).values()}" th:value="${s}"
                                         th:text="${s}"></option>
                                     </select>
                                 </div>

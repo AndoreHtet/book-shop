@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -14,9 +17,9 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int itemId;
     private int quantity;
-    @ManyToOne
-    private Book book;
     @JoinColumn(name = "order_id_fk")
     @ManyToOne
     private Order order;
+
+
 }
